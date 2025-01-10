@@ -39,40 +39,82 @@
 
   // prettier-ignore
   const COMMANDS = new Map([
-    ['a', { name: 'ChatGPT', searchTemplate: '?q={}', url: 'https://chatgpt.com' }],
-    ['c', { name: 'Cloudflare', url: 'https://dash.cloudflare.com' }],
-    ['d', { name: 'Drive', url: 'https://drive.google.com/drive/u/0/my-drive' }],
-    ['e', { name: 'Resend', url: 'https://resend.com/emails?time=all&page=1' }],
-    ['f', { name: 'Figma', url: 'https://www.figma.com' }],
-    ['g', { name: 'GitHub', searchTemplate: '/search?q={}', suggestions: ['g/copilot', 'g/trending'], url: 'https://github.com' }],
-    ['i', { name: 'Intuit', url: 'https://selfemployed.intuit.com/home' }],
-    ['o', { name: 'Droplet', url: 'https://cloud.digitalocean.com/projects/50ffcff7-ad65-40e3-af88-3cbc5a38cf99/resources' }],
-    ['p', { name: 'Proton', suggestions: ['p/pass', 'p/drive'], url: 'https://mail.proton.me/u/0/inbox' }],
-    ['p/drive', { url: 'https://drive.proton.me/u/0' }],
-    ['p/pass', { url: 'https://pass.proton.me/u/0' }],
-    ['r', { name: 'Reddit', searchTemplate: '/search/?q={}', url: 'https://www.reddit.com' }],
-    ['s', { name: 'Supabase', url: 'https://supabase.com/dashboard/projects' }],
-    ['t', { name: 'TickTick', url: 'https://ticktick.com/webapp/#q/today/tasks' }],
-    ['v', { name: 'Vercel', suggestions: ['v0.dev'], url: 'https://vercel.com/dashboard' }],
-    ['y', { name: 'YouTube', searchTemplate: '/results?search_query={}', url: 'https://www.youtube.com/feed/subscriptions' }],
-    ['0', { name: 'localhost', suggestions: ['0:54323', '0:54324'], url: 'http://localhost:3000' }],
-    ['0:54323', { url: 'http://localhost:54323' }],
-    ['0:54324', { url: 'http://localhost:54324' }],
+    // Work Tools
+    ['r', { 
+      name: 'Requirements', 
+      url: 'https://confluence.zeal.link/display/MYZ/Product+Requirements',
+      group: 'Work'
+    }],
+    ['c', { 
+      name: 'Trading', 
+      url: 'https://confluence.zeal.link/display/MYZ/Trading',
+      group: 'Work'
+    }],
+    ['j', { 
+      name: 'Jira Board', 
+      url: 'https://jira.zeal.link/secure/RapidBoard.jspa?rapidView=123&projectKey=PP&view=planning&issueLimit=100#',
+      group: 'Work'
+    }],
+
+    // Other Tools
+    ['a', { name: 'Chat', url: 'https://chat.openai.com', group: 'Other Tools' }],
+    ['b', { name: 'Claude', url: 'https://claude.ai/login', group: 'Other Tools' }],
+    ['x', { name: 'X', url: 'https://twitter.com/home', group: 'Other Tools' }],
+    ['f', { name: 'Cloudflare', url: 'https://one.dash.cloudflare.com/deec3c68003b1e10d5027984c23bd0ff/networks/tunnels', group: 'Other Tools' }],
+    ['s', { name: 'Marious', url: 'https://mariushosting.com/', group: 'Other Tools' }],
+    ['m', { name: 'Memos', url: 'https://memos.egor.lol/', group: 'Other Tools' }],
+    ['g', { name: 'GitHub', url: 'https://github.com/trending', group: 'Other Tools' }],
+    ['8', { name: 'n8n', url: 'https://n8n.dev.vodka/', group: 'Other Tools' }],
   ]);
 </script>
 
 <template id="commands-template">
   <style>
     .commands {
-      border-radius: var(--border-radius);
-      column-gap: 0;
-      columns: 2;
-      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: calc(var(--space) * 2);
       margin: 0 auto;
-      max-width: 23rem;
-      overflow: hidden;
+      max-width: 55rem;
       padding: 0;
-      width: 100vw;
+      width: 100%;
+    }
+
+    .group {
+      background: rgba(128, 128, 128, 0.05);
+      border-radius: var(--border-radius);
+      padding: var(--space);
+    }
+
+    .group-title {
+      color: var(--color-text-subtle);
+      font-size: 0.9em;
+      margin: 0 0 var(--space) var(--space);
+      text-transform: uppercase;
+    }
+
+    .group-commands {
+      display: grid;
+      gap: 0;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    @media (min-width: 768px) {
+      .commands {
+        grid-template-columns: 1fr;
+        gap: var(--space);
+      }
+      
+      .group {
+        margin: 0;
+      }
+
+      .group-commands {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
 
     .command {
@@ -112,24 +154,8 @@
     .command:where(:focus, :hover) .name {
       color: var(--color-text);
     }
-
-    @media (min-width: 45rem) {
-      .commands {
-        columns: 3;
-        max-width: 35rem;
-      }
-    }
-
-    @media (min-width: 65rem) {
-      .commands {
-        columns: 5;
-        max-width: 55rem;
-      }
-    }
   </style>
-  <nav>
-    <menu class="commands"></menu>
-  </nav>
+  <nav class="commands"></nav>
 </template>
 
 <template id="command-template">
@@ -141,6 +167,13 @@
   </li>
 </template>
 
+<template id="group-template">
+  <div class="group">
+    <h2 class="group-title"></h2>
+    <ul class="group-commands"></ul>
+  </div>
+</template>
+
 <script type="module">
   class Commands extends HTMLElement {
     constructor() {
@@ -150,16 +183,37 @@
       const clone = template.content.cloneNode(true);
       const commands = clone.querySelector('.commands');
       const commandTemplate = document.getElementById('command-template');
+      const groupTemplate = document.getElementById('group-template');
 
-      for (const [key, { name, url }] of COMMANDS.entries()) {
-        if (!name || !url) continue;
-        const clone = commandTemplate.content.cloneNode(true);
-        const command = clone.querySelector('.command');
-        command.href = url;
-        if (CONFIG.openLinksInNewTab) command.target = '_blank';
-        clone.querySelector('.key').innerText = key;
-        clone.querySelector('.name').innerText = name;
-        commands.append(clone);
+      // Group commands by their group property
+      const groups = new Map();
+      for (const [key, command] of COMMANDS.entries()) {
+        const groupName = command.group || 'Other';
+        if (!groups.has(groupName)) {
+          groups.set(groupName, []);
+        }
+        groups.get(groupName).push({ key, ...command });
+      }
+
+      // Create groups and add commands to them
+      for (const [groupName, groupCommands] of groups.entries()) {
+        const groupClone = groupTemplate.content.cloneNode(true);
+        const groupElement = groupClone.querySelector('.group');
+        groupElement.querySelector('.group-title').textContent = groupName;
+        const groupCommandsList = groupElement.querySelector('.group-commands');
+
+        for (const { key, name, url } of groupCommands) {
+          if (!name || !url) continue;
+          const commandClone = commandTemplate.content.cloneNode(true);
+          const command = commandClone.querySelector('.command');
+          command.href = url;
+          if (CONFIG.openLinksInNewTab) command.target = '_blank';
+          commandClone.querySelector('.key').innerText = key;
+          commandClone.querySelector('.name').innerText = name;
+          groupCommandsList.append(commandClone);
+        }
+
+        commands.append(groupElement);
       }
 
       this.shadowRoot.append(clone);
