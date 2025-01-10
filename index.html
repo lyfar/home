@@ -43,28 +43,37 @@
     ['r', { 
       name: 'Requirements', 
       url: 'https://confluence.zeal.link/display/MYZ/Product+Requirements',
-      group: 'Work'
+      group: '💼'
     }],
-    ['c', { 
+    ['t', { 
       name: 'Trading', 
       url: 'https://confluence.zeal.link/display/MYZ/Trading',
-      group: 'Work'
+      group: '💼'
     }],
     ['j', { 
       name: 'Jira Board', 
       url: 'https://jira.zeal.link/secure/RapidBoard.jspa?rapidView=123&projectKey=PP&view=planning&issueLimit=100#',
-      group: 'Work'
+      group: '💼'
     }],
 
-    // Other Tools
-    ['a', { name: 'Chat', url: 'https://chat.openai.com', group: 'Other Tools' }],
-    ['b', { name: 'Claude', url: 'https://claude.ai/login', group: 'Other Tools' }],
-    ['x', { name: 'X', url: 'https://twitter.com/home', group: 'Other Tools' }],
-    ['f', { name: 'Cloudflare', url: 'https://one.dash.cloudflare.com/deec3c68003b1e10d5027984c23bd0ff/networks/tunnels', group: 'Other Tools' }],
-    ['s', { name: 'Marious', url: 'https://mariushosting.com/', group: 'Other Tools' }],
-    ['m', { name: 'Memos', url: 'https://memos.egor.lol/', group: 'Other Tools' }],
-    ['g', { name: 'GitHub', url: 'https://github.com/trending', group: 'Other Tools' }],
-    ['8', { name: 'n8n', url: 'https://n8n.dev.vodka/', group: 'Other Tools' }],
+ 
+
+    // Personal Tools
+    ['a', { name: 'Chat', url: 'https://chat.openai.com', group: '🏠' }],
+    ['b', { name: 'Claude', url: 'https://claude.ai/login', group: '🏠' }],
+    ['x', { name: 'X', url: 'https://twitter.com/home', group: '🏠' }],
+    ['f', { name: 'Cloudflare', url: 'https://one.dash.cloudflare.com/deec3c68003b1e10d5027984c23bd0ff/networks/tunnels', group: '🏠' }],
+    ['s', { name: 'Marious', url: 'https://mariushosting.com/', group: '🏠' }],
+    ['g', { name: 'GitHub', url: 'https://github.com/trending', group: '🏠' }],
+    ['8', { name: 'n8n', url: 'https://n8n.dev.vodka/', group: '🏠' }],
+
+       // Piracy Tools
+       ['p', { name: 'Reddit Piracy', url: 'https://reddit.com/r/Piracy', group: '🏴‍☠️' }],
+    ['d', { name: 'Direct DL', url: 'https://evasion.github.io', group: '🏴‍☠️' }],
+    ['o', { name: 'OpenSource', url: 'https://opensource.info', group: '🏴‍☠️' }],
+    ['l', { name: 'OSS Alt', url: 'https://opensourcealternative.to', group: '🏴‍☠️' }],
+    ['m', { name: 'MacOS Apps', url: 'https://appstorrent.ru', group: '🏴‍☠️' }],
+    ['z', { name: 'Z-Library', url: 'https://annas-archive.org', group: '🏴‍☠️' }],
   ]);
 </script>
 
@@ -81,16 +90,16 @@
     }
 
     .group {
-      background: rgba(128, 128, 128, 0.05);
       border-radius: var(--border-radius);
       padding: var(--space);
     }
 
     .group-title {
       color: var(--color-text-subtle);
-      font-size: 0.9em;
-      margin: 0 0 var(--space) var(--space);
-      text-transform: uppercase;
+      font-size: 1.2em;
+      margin: 0 0 var(--space) 0;
+      text-transform: none;
+      text-align: center;
     }
 
     .group-commands {
